@@ -83,7 +83,11 @@ const SkillForm = ({ open, onClose, skill }: SkillFormProps) => {
           description: `"${values.title}" has been updated.`,
         });
       } else {
-        await createSkill.mutateAsync(values);
+        await createSkill.mutateAsync({
+          title: values.title,
+          description: values.description,
+          icon: values.icon,
+        });
         toast({
           title: "Skill created",
           description: `"${values.title}" has been added.`,
