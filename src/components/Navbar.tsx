@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Settings } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 
 const navLinks = [
   { label: "Skills", href: "#skills" },
@@ -12,6 +14,7 @@ const navLinks = [
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { user, isAdmin } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,7 +32,7 @@ const Navbar = () => {
       }`}
     >
       <nav className="container px-6 py-4 flex items-center justify-between">
-        <a href="#" className="font-mono text-lg font-semibold text-primary">
+        <a href="/" className="font-mono text-lg font-semibold text-primary">
           &lt;AM /&gt;
         </a>
 
@@ -45,6 +48,17 @@ const Navbar = () => {
               </a>
             </li>
           ))}
+          {isAdmin && (
+            <li>
+              <Link
+                to="/admin"
+                className="flex items-center gap-1.5 text-sm text-primary hover:text-primary/80 transition-colors"
+              >
+                <Settings className="w-4 h-4" />
+                Admin
+              </Link>
+            </li>
+          )}
         </ul>
 
         {/* Mobile Menu Button */}
@@ -76,6 +90,18 @@ const Navbar = () => {
                     </a>
                   </li>
                 ))}
+                {isAdmin && (
+                  <li>
+                    <Link
+                      to="/admin"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="flex items-center gap-1.5 text-primary hover:text-primary/80 transition-colors"
+                    >
+                      <Settings className="w-4 h-4" />
+                      Admin
+                    </Link>
+                  </li>
+                )}
               </ul>
             </motion.div>
           )}
