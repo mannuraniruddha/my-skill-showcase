@@ -30,7 +30,7 @@ const Contact = () => {
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
             <a
-              href="mailto:your@email.com"
+              href="mailto:mannur.aniruddha@gmail.com"
               className="group flex items-center gap-3 px-6 py-3 rounded-lg bg-gradient-primary text-primary-foreground font-medium transition-all duration-300 hover:glow-primary"
             >
               <Mail className="w-5 h-5" />
@@ -39,7 +39,7 @@ const Contact = () => {
             </a>
 
             <a
-              href="https://github.com"
+              href="https://github.com/mannuraniruddha"
               target="_blank"
               rel="noopener noreferrer"
               className="group flex items-center gap-3 px-6 py-3 rounded-lg bg-card border border-border hover:border-primary/50 transition-all duration-300"
@@ -50,7 +50,7 @@ const Contact = () => {
             </a>
 
             <a
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/in/aniruddha-mannur/"
               target="_blank"
               rel="noopener noreferrer"
               className="group flex items-center gap-3 px-6 py-3 rounded-lg bg-card border border-border hover:border-primary/50 transition-all duration-300"

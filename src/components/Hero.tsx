@@ -32,7 +32,7 @@ const Hero = () => {
             transition={{ delay: 0.3 }}
             className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6"
           >
-            I'm <span className="text-gradient">Your Name</span>
+            I'm <span className="text-gradient">Aniruddha Mannur</span>
           </motion.h1>
 
           <motion.p
@@ -55,7 +55,7 @@ const Hero = () => {
             className="flex items-center justify-center gap-4"
           >
             <a
-              href="https://github.com"
+              href="https://github.com/mannuraniruddha"
               target="_blank"
               rel="noopener noreferrer"
               className="p-3 rounded-lg bg-card hover:bg-secondary border border-border transition-all duration-300 hover:glow-primary hover:border-primary/50 group"
@@ -63,7 +63,7 @@ const Hero = () => {
               <Github className="w-5 h-5 group-hover:text-primary transition-colors" />
             </a>
             <a
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/in/aniruddha-mannur/"
               target="_blank"
               rel="noopener noreferrer"
               className="p-3 rounded-lg bg-card hover:bg-secondary border border-border transition-all duration-300 hover:glow-primary hover:border-primary/50 group"
@@ -71,7 +71,7 @@ const Hero = () => {
               <Linkedin className="w-5 h-5 group-hover:text-primary transition-colors" />
             </a>
             <a
-              href="mailto:your@email.com"
+              href="mailto:mannur.aniruddha@gmail.com"
               className="p-3 rounded-lg bg-card hover:bg-secondary border border-border transition-all duration-300 hover:glow-primary hover:border-primary/50 group"
             >
               <Mail className="w-5 h-5 group-hover:text-primary transition-colors" />
