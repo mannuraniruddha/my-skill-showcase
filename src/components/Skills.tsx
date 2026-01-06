@@ -6,7 +6,8 @@ const skills = [
     title: "Python Development",
     description: "Building robust applications, automation scripts, data analysis tools, and APIs using Python ecosystem.",
     icon: Code2,
-    projectCount: 0,
+    projectCount: 1,
+    projects: ["Learn Python"],
   },
   {
     title: "Project/Program Management",
