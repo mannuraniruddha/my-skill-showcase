@@ -1,17 +1,15 @@
 import { motion } from "framer-motion";
 import { FolderOpen } from "lucide-react";
-
+import ProjectCard from "./ProjectCard";
 // Example projects - you'll replace these with your real projects
 const projects = [
-  // Add your projects here following this structure:
-  // {
-  //   title: "Project Name",
-  //   description: "Brief description of what the project does.",
-  //   tags: ["Python", "API", "Automation"],
-  //   githubUrl: "https://github.com/yourusername/project",
-  //   liveUrl: "https://project-demo.com",
-  //   category: "python" // or "pm", "scrum", "product"
-  // },
+  {
+    title: "Learn Python",
+    description: "A comprehensive Python learning project covering fundamentals, data structures, and practical applications.",
+    tags: ["Python", "Learning", "Fundamentals"],
+    githubUrl: "https://github.com/mannuraniruddha/Learn-Python",
+    category: "python"
+  },
 ];
 
 const Projects = () => {
@@ -54,7 +52,16 @@ const Projects = () => {
           </motion.div>
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Projects will be mapped here */}
+            {projects.map((project, index) => (
+              <ProjectCard
+                key={project.title}
+                title={project.title}
+                description={project.description}
+                tags={project.tags}
+                githubUrl={project.githubUrl}
+                delay={index * 0.1}
+              />
+            ))}
           </div>
         )}
       </div>
