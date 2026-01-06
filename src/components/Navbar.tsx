@@ -30,7 +30,7 @@ const Navbar = () => {
     >
       <nav className="container px-6 py-4 flex items-center justify-between">
         <a href="#" className="font-mono text-lg font-semibold text-primary">
-          &lt;dev /&gt;
+          &lt;AM /&gt;
         </a>
 
         {/* Desktop Navigation */}
