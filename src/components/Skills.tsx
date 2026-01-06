@@ -1,35 +1,10 @@
-import { Code2, FolderKanban, Users, Package } from "lucide-react";
+import { useSkills } from "@/hooks/useSkills";
 import SkillCard from "./SkillCard";
-
-const skills = [
-  {
-    title: "Python Development",
-    description: "Building robust applications, automation scripts, data analysis tools, and APIs using Python ecosystem.",
-    icon: Code2,
-    projectCount: 1,
-    projects: ["Learn Python"],
-  },
-  {
-    title: "Project/Program Management",
-    description: "Leading cross-functional teams, managing timelines, budgets, and delivering complex projects on schedule.",
-    icon: FolderKanban,
-    projectCount: 0,
-  },
-  {
-    title: "Scrum & Agile",
-    description: "Implementing agile methodologies, facilitating ceremonies, and driving continuous improvement.",
-    icon: Users,
-    projectCount: 0,
-  },
-  {
-    title: "Product Management",
-    description: "Defining product vision, roadmaps, gathering requirements, and delivering customer-centric solutions.",
-    icon: Package,
-    projectCount: 0,
-  },
-];
+import { getIcon } from "@/lib/icons";
 
 const Skills = () => {
+  const { data: skills, isLoading } = useSkills();
+
   return (
     <section id="skills" className="py-24 bg-gradient-subtle">
       <div className="container px-6">
@@ -44,15 +19,31 @@ const Skills = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {skills.map((skill, index) => (
-            <SkillCard
-              key={skill.title}
-              {...skill}
-              delay={index * 0.1}
-            />
-          ))}
-        </div>
+        {isLoading ? (
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className="h-48 bg-card border border-border rounded-xl animate-pulse" />
+            ))}
+          </div>
+        ) : skills && skills.length > 0 ? (
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {skills.map((skill, index) => (
+              <SkillCard
+                key={skill.id}
+                title={skill.title}
+                description={skill.description}
+                icon={getIcon(skill.icon)}
+                projectCount={skill.projectCount}
+                projects={skill.projects.map((p) => p.title)}
+                delay={index * 0.1}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-12 text-muted-foreground">
+            <p>No skills added yet. Add them from the admin panel.</p>
+          </div>
+        )}
       </div>
     </section>
   );
