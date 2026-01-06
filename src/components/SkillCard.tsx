@@ -6,10 +6,11 @@ interface SkillCardProps {
   description: string;
   icon: LucideIcon;
   projectCount: number;
+  projects?: string[];
   delay?: number;
 }
 
-const SkillCard = ({ title, description, icon: Icon, projectCount, delay = 0 }: SkillCardProps) => {
+const SkillCard = ({ title, description, icon: Icon, projectCount, projects = [], delay = 0 }: SkillCardProps) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -32,6 +33,19 @@ const SkillCard = ({ title, description, icon: Icon, projectCount, delay = 0 }: 
         <p className="text-muted-foreground text-sm leading-relaxed mb-4">
           {description}
         </p>
+
+        {projects.length > 0 && (
+          <div className="mb-4">
+            <p className="text-xs font-mono text-muted-foreground mb-2">Projects:</p>
+            <ul className="space-y-1">
+              {projects.map((project) => (
+                <li key={project} className="text-sm text-foreground">
+                  • {project}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
         
         <div className="flex items-center gap-2 text-xs font-mono text-muted-foreground">
           <span className="px-2 py-1 rounded bg-secondary">
