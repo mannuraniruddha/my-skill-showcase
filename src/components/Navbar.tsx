@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Settings } from "lucide-react";
+import { Menu, X, Settings, LogIn, LogOut } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 
 const navLinks = [
@@ -14,7 +14,7 @@ const navLinks = [
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { user, isAdmin } = useAuth();
+  const { user, isAdmin, signOut } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,9 +32,9 @@ const Navbar = () => {
       }`}
     >
       <nav className="container px-6 py-4 flex items-center justify-between">
-        <a href="/" className="font-mono text-lg font-semibold text-primary">
+        <Link to="/" className="font-mono text-lg font-semibold text-primary">
           &lt;AM /&gt;
-        </a>
+        </Link>
 
         {/* Desktop Navigation */}
         <ul className="hidden md:flex items-center gap-8">
@@ -59,6 +59,25 @@ const Navbar = () => {
               </Link>
             </li>
           )}
+          <li>
+            {user ? (
+              <button
+                onClick={() => signOut()}
+                className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <LogOut className="w-4 h-4" />
+                Sign out
+              </button>
+            ) : (
+              <Link
+                to="/auth"
+                className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <LogIn className="w-4 h-4" />
+                Sign in
+              </Link>
+            )}
+          </li>
         </ul>
 
         {/* Mobile Menu Button */}
@@ -102,6 +121,29 @@ const Navbar = () => {
                     </Link>
                   </li>
                 )}
+                <li>
+                  {user ? (
+                    <button
+                      onClick={() => {
+                        signOut();
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className="flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      <LogOut className="w-4 h-4" />
+                      Sign out
+                    </button>
+                  ) : (
+                    <Link
+                      to="/auth"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      <LogIn className="w-4 h-4" />
+                      Sign in
+                    </Link>
+                  )}
+                </li>
               </ul>
             </motion.div>
           )}
