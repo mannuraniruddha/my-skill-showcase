@@ -114,3 +114,51 @@
     transform: translateY(-10px);
   }
 }
+
+/* TipTap Editor Styles */
+.tiptap-editor {
+  min-height: 150px;
+  outline: none;
+}
+
+.tiptap-editor p.is-empty::before {
+  content: attr(data-placeholder);
+  color: hsl(var(--muted-foreground));
+  pointer-events: none;
+  float: left;
+  height: 0;
+}
+
+.ProseMirror {
+  outline: none;
+}
+
+.ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: hsl(var(--muted-foreground));
+  pointer-events: none;
+  height: 0;
+}
+
+/* Prose styling for rich text */
+.prose {
+  --tw-prose-body: hsl(var(--muted-foreground));
+  --tw-prose-headings: hsl(var(--foreground));
+  --tw-prose-links: hsl(var(--primary));
+  --tw-prose-bold: hsl(var(--foreground));
+  --tw-prose-counters: hsl(var(--muted-foreground));
+  --tw-prose-bullets: hsl(var(--muted-foreground));
+  --tw-prose-quotes: hsl(var(--muted-foreground));
+  --tw-prose-quote-borders: hsl(var(--primary));
+  --tw-prose-code: hsl(var(--foreground));
+  --tw-prose-pre-bg: hsl(var(--secondary));
+}
+
+/* Search highlight */
+mark {
+  background-color: hsl(var(--primary) / 0.3);
+  color: hsl(var(--foreground));
+  padding: 0 2px;
+  border-radius: 2px;
+}
