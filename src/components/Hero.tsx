@@ -85,10 +85,23 @@ const Hero = () => {
           transition={{ delay: 1, duration: 1 }}
           className="absolute bottom-8 left-1/2 -translate-x-1/2"
         >
-          <a href="#skills" className="flex flex-col items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
+          <button 
+            onClick={() => {
+              const element = document.getElementById("skills");
+              if (element) {
+                const offset = 80;
+                const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+                window.scrollTo({
+                  top: elementPosition - offset,
+                  behavior: "smooth",
+                });
+              }
+            }}
+            className="flex flex-col items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
+          >
             <span className="text-xs font-mono">scroll</span>
             <ChevronDown className="w-5 h-5 animate-bounce" />
-          </a>
+          </button>
         </motion.div>
       </div>
     </section>
