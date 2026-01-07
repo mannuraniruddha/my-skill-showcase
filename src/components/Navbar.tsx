@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Settings, LogIn, LogOut, Search } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import SearchCommand from "./SearchCommand";
 
 const navLinks = [
-  { label: "Skills", href: "#skills" },
-  { label: "Projects", href: "#projects" },
-  { label: "About", href: "#about" },
-  { label: "Contact", href: "#contact" },
+  { label: "Skills", sectionId: "skills" },
+  { label: "Projects", sectionId: "projects" },
+  { label: "About", sectionId: "about" },
+  { label: "Contact", sectionId: "contact" },
 ];
 
 const Navbar = () => {
@@ -17,6 +17,7 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const { user, isAdmin, signOut } = useAuth();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,6 +27,24 @@ const Navbar = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const scrollToSection = (sectionId: string) => {
+    // If not on home page, navigate there first
+    if (location.pathname !== "/") {
+      window.location.href = `${import.meta.env.BASE_URL}#/?section=${sectionId}`;
+      return;
+    }
+    
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const offset = 80; // Account for fixed navbar
+      const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({
+        top: elementPosition - offset,
+        behavior: "smooth",
+      });
+    }
+  };
 
   // Keyboard shortcut for search (Ctrl+K)
   useEffect(() => {
@@ -40,12 +59,16 @@ const Navbar = () => {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
+  // Check if deployment banner is visible (only in production and not dismissed)
+  const showBanner = import.meta.env.PROD && typeof window !== "undefined" && 
+    localStorage.getItem("deployment-banner-dismissed") !== "true";
+
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled ? "bg-background/80 backdrop-blur-lg border-b border-border" : ""
-        }`}
+        className={`fixed left-0 right-0 z-40 transition-all duration-300 ${
+          showBanner ? "top-10" : "top-0"
+        } ${isScrolled ? "bg-background/80 backdrop-blur-lg border-b border-border" : ""}`}
       >
         <nav className="container px-6 py-4 flex items-center justify-between">
           <Link to="/" className="font-mono text-lg font-semibold text-primary">
@@ -68,13 +91,13 @@ const Navbar = () => {
               </button>
             </li>
             {navLinks.map((link) => (
-              <li key={link.href}>
-                <a
-                  href={link.href}
+              <li key={link.sectionId}>
+                <button
+                  onClick={() => scrollToSection(link.sectionId)}
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
                   {link.label}
-                </a>
+                </button>
               </li>
             ))}
             {isAdmin && (
@@ -136,14 +159,16 @@ const Navbar = () => {
               >
                 <ul className="container px-6 py-4 space-y-4">
                   {navLinks.map((link) => (
-                    <li key={link.href}>
-                      <a
-                        href={link.href}
-                        onClick={() => setIsMobileMenuOpen(false)}
+                    <li key={link.sectionId}>
+                      <button
+                        onClick={() => {
+                          scrollToSection(link.sectionId);
+                          setIsMobileMenuOpen(false);
+                        }}
                         className="block text-muted-foreground hover:text-foreground transition-colors"
                       >
                         {link.label}
-                      </a>
+                      </button>
                     </li>
                   ))}
                   {isAdmin && (
