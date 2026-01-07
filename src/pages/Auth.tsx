@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
@@ -111,9 +111,9 @@ const Auth = () => {
       >
         <div className="bg-card border border-border rounded-xl p-8 shadow-card">
           <div className="text-center mb-8">
-            <a href="/" className="font-mono text-2xl font-semibold text-primary">
+            <Link to="/" className="font-mono text-2xl font-semibold text-primary">
               &lt;AM /&gt;
-            </a>
+            </Link>
             <h1 className="text-2xl font-bold mt-4">
               {isLogin ? "Welcome Back" : "Create Account"}
             </h1>
