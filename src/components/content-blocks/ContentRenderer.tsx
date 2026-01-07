@@ -3,6 +3,8 @@ import TabbedCodeBlock from "./TabbedCodeBlock";
 import MarkdownBlock from "./MarkdownBlock";
 import OutputBlock from "./OutputBlock";
 import ImageBlock from "./ImageBlock";
+import SpacerBlock from "./SpacerBlock";
+import DividerBlock from "./DividerBlock";
 
 interface ContentRendererProps {
   blocks: ContentBlock[];
@@ -54,6 +56,20 @@ const ContentRenderer = ({ blocks, searchQuery }: ContentRendererProps) => {
               <p key={block.id} className="text-foreground leading-relaxed">
                 {block.content}
               </p>
+            );
+          case "spacer":
+            return (
+              <SpacerBlock
+                key={block.id}
+                height={block.metadata?.height || "medium"}
+              />
+            );
+          case "divider":
+            return (
+              <DividerBlock
+                key={block.id}
+                style={block.metadata?.style || "solid"}
+              />
             );
           default:
             return null;
