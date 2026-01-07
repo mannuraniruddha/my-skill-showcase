@@ -1,29 +1,37 @@
 import { type ContentBlock } from "@/hooks/useContentBlocks";
-import CodeBlock from "./CodeBlock";
+import TabbedCodeBlock from "./TabbedCodeBlock";
 import MarkdownBlock from "./MarkdownBlock";
 import OutputBlock from "./OutputBlock";
 import ImageBlock from "./ImageBlock";
 
 interface ContentRendererProps {
   blocks: ContentBlock[];
+  searchQuery?: string;
 }
 
-const ContentRenderer = ({ blocks }: ContentRendererProps) => {
+const ContentRenderer = ({ blocks, searchQuery }: ContentRendererProps) => {
   return (
     <div className="space-y-6">
       {blocks.map((block) => {
         switch (block.type) {
           case "code":
             return (
-              <CodeBlock
+              <TabbedCodeBlock
                 key={block.id}
                 code={block.content}
                 language={block.metadata?.language || "text"}
                 filename={block.metadata?.filename}
+                levels={block.metadata?.levels}
               />
             );
           case "markdown":
-            return <MarkdownBlock key={block.id} content={block.content} />;
+            return (
+              <MarkdownBlock
+                key={block.id}
+                content={block.content}
+                searchQuery={searchQuery}
+              />
+            );
           case "output":
             return (
               <OutputBlock

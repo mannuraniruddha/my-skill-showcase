@@ -22,6 +22,7 @@ export type Database = {
           metadata: Json | null
           order_index: number
           project_id: string
+          search_vector: unknown
           type: string
           updated_at: string
         }
@@ -32,6 +33,7 @@ export type Database = {
           metadata?: Json | null
           order_index?: number
           project_id: string
+          search_vector?: unknown
           type: string
           updated_at?: string
         }
@@ -42,6 +44,7 @@ export type Database = {
           metadata?: Json | null
           order_index?: number
           project_id?: string
+          search_vector?: unknown
           type?: string
           updated_at?: string
         }
@@ -99,6 +102,7 @@ export type Database = {
           id: string
           image_url: string | null
           live_url: string | null
+          search_vector: unknown
           slug: string
           title: string
           updated_at: string
@@ -110,6 +114,7 @@ export type Database = {
           id?: string
           image_url?: string | null
           live_url?: string | null
+          search_vector?: unknown
           slug: string
           title: string
           updated_at?: string
@@ -121,6 +126,7 @@ export type Database = {
           id?: string
           image_url?: string | null
           live_url?: string | null
+          search_vector?: unknown
           slug?: string
           title?: string
           updated_at?: string

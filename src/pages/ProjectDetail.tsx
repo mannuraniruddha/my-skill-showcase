@@ -1,17 +1,43 @@
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useState } from "react";
+import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft, Github, ExternalLink } from "lucide-react";
 import { useProject } from "@/hooks/useProjects";
+import { usePaginatedContent } from "@/hooks/usePaginatedContent";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+  PaginationEllipsis,
+} from "@/components/ui/pagination";
 import ContentRenderer from "@/components/content-blocks/ContentRenderer";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
+const PAGE_SIZE = 10;
+
 const ProjectDetail = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const currentPage = parseInt(searchParams.get("page") || "1", 10);
+
   const { data: project, isLoading, error } = useProject(slug || "");
+  const { data: paginatedData, isLoading: contentLoading } = usePaginatedContent(
+    project?.id || "",
+    currentPage,
+    PAGE_SIZE
+  );
+
+  const handlePageChange = (page: number) => {
+    setSearchParams({ page: page.toString() });
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   if (isLoading) {
     return (
@@ -34,6 +60,81 @@ const ProjectDetail = () => {
       </div>
     );
   }
+
+  // Generate page numbers for pagination
+  const renderPaginationItems = () => {
+    if (!paginatedData || paginatedData.totalPages <= 1) return null;
+
+    const { totalPages, currentPage } = paginatedData;
+    const items: React.ReactNode[] = [];
+
+    // Always show first page
+    items.push(
+      <PaginationItem key={1}>
+        <PaginationLink
+          onClick={() => handlePageChange(1)}
+          isActive={currentPage === 1}
+          className="cursor-pointer"
+        >
+          1
+        </PaginationLink>
+      </PaginationItem>
+    );
+
+    // Show ellipsis if needed
+    if (currentPage > 3) {
+      items.push(
+        <PaginationItem key="ellipsis-start">
+          <PaginationEllipsis />
+        </PaginationItem>
+      );
+    }
+
+    // Show pages around current page
+    for (
+      let i = Math.max(2, currentPage - 1);
+      i <= Math.min(totalPages - 1, currentPage + 1);
+      i++
+    ) {
+      items.push(
+        <PaginationItem key={i}>
+          <PaginationLink
+            onClick={() => handlePageChange(i)}
+            isActive={currentPage === i}
+            className="cursor-pointer"
+          >
+            {i}
+          </PaginationLink>
+        </PaginationItem>
+      );
+    }
+
+    // Show ellipsis if needed
+    if (currentPage < totalPages - 2) {
+      items.push(
+        <PaginationItem key="ellipsis-end">
+          <PaginationEllipsis />
+        </PaginationItem>
+      );
+    }
+
+    // Always show last page if more than 1 page
+    if (totalPages > 1) {
+      items.push(
+        <PaginationItem key={totalPages}>
+          <PaginationLink
+            onClick={() => handlePageChange(totalPages)}
+            isActive={currentPage === totalPages}
+            className="cursor-pointer"
+          >
+            {totalPages}
+          </PaginationLink>
+        </PaginationItem>
+      );
+    }
+
+    return items;
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -115,8 +216,64 @@ const ProjectDetail = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
           >
-          {project.contentBlocks && project.contentBlocks.length > 0 ? (
-              <ContentRenderer blocks={project.contentBlocks as any} />
+            {contentLoading ? (
+              <div className="text-center py-12">
+                <div className="animate-pulse text-muted-foreground">
+                  Loading content...
+                </div>
+              </div>
+            ) : paginatedData && paginatedData.blocks.length > 0 ? (
+              <>
+                {/* Page info */}
+                {paginatedData.totalPages > 1 && (
+                  <div className="text-sm text-muted-foreground mb-6">
+                    Showing page {paginatedData.currentPage} of{" "}
+                    {paginatedData.totalPages} ({paginatedData.totalCount} total
+                    items)
+                  </div>
+                )}
+
+                <ContentRenderer blocks={paginatedData.blocks as any} />
+
+                {/* Pagination */}
+                {paginatedData.totalPages > 1 && (
+                  <div className="mt-12 flex justify-center">
+                    <Pagination>
+                      <PaginationContent>
+                        <PaginationItem>
+                          <PaginationPrevious
+                            onClick={() =>
+                              handlePageChange(Math.max(1, currentPage - 1))
+                            }
+                            className={
+                              currentPage === 1
+                                ? "pointer-events-none opacity-50"
+                                : "cursor-pointer"
+                            }
+                          />
+                        </PaginationItem>
+
+                        {renderPaginationItems()}
+
+                        <PaginationItem>
+                          <PaginationNext
+                            onClick={() =>
+                              handlePageChange(
+                                Math.min(paginatedData.totalPages, currentPage + 1)
+                              )
+                            }
+                            className={
+                              currentPage === paginatedData.totalPages
+                                ? "pointer-events-none opacity-50"
+                                : "cursor-pointer"
+                            }
+                          />
+                        </PaginationItem>
+                      </PaginationContent>
+                    </Pagination>
+                  </div>
+                )}
+              </>
             ) : (
               <div className="bg-card border border-border rounded-lg p-8 text-center">
                 <p className="text-muted-foreground">
