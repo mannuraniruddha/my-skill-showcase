@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 export interface ContentBlock {
   id: string;
   project_id: string;
-  type: "markdown" | "code" | "output" | "image" | "text";
+  type: "markdown" | "code" | "output" | "image" | "text" | "spacer" | "divider";
   content: string;
   metadata: Record<string, any>;
   order_index: number;

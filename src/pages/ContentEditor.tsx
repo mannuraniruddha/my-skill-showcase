@@ -25,6 +25,8 @@ import { useImageUpload } from "@/hooks/useImageUpload";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { CodeTextarea } from "@/components/ui/code-textarea";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -63,6 +65,8 @@ const blockTypes = [
   { value: "output", label: "Output/Console" },
   { value: "image", label: "Image" },
   { value: "text", label: "Plain Text" },
+  { value: "spacer", label: "Spacer" },
+  { value: "divider", label: "Divider" },
 ];
 
 const languageOptions = [
@@ -138,14 +142,20 @@ const ContentEditor = () => {
   }, [blocks]);
 
   const handleAddBlock = (type: ContentBlock["type"]) => {
+    let defaultMetadata: Record<string, any> = {};
+    if (type === "code") {
+      defaultMetadata = { language: "python", filename: "", levels: {} };
+    } else if (type === "spacer") {
+      defaultMetadata = { height: "medium" };
+    } else if (type === "divider") {
+      defaultMetadata = { style: "solid" };
+    }
+
     const newBlock: LocalBlock = {
       id: `new-${Date.now()}`,
       type,
       content: "",
-      metadata:
-        type === "code"
-          ? { language: "python", filename: "", levels: {} }
-          : {},
+      metadata: defaultMetadata,
       order_index: localBlocks.length,
       isNew: true,
       isDirty: true,
@@ -556,17 +566,17 @@ const ContentEditor = () => {
                                           )}
                                         </CollapsibleTrigger>
                                         <CollapsibleContent className="pt-2">
-                                          <Textarea
+                                          <CodeTextarea
                                             value={levelCode}
-                                            onChange={(e) =>
+                                            onChange={(value) =>
                                               updateCodeLevel(
                                                 block.id,
                                                 level,
-                                                e.target.value
+                                                value
                                               )
                                             }
                                             placeholder={`Enter ${level} level code...`}
-                                            className="font-mono min-h-[100px]"
+                                            className="min-h-[100px]"
                                           />
                                         </CollapsibleContent>
                                       </Collapsible>
@@ -718,6 +728,65 @@ const ContentEditor = () => {
                                     : "Enter text..."
                                 }
                               />
+                            </div>
+                          )}
+
+                          {/* Spacer block */}
+                          {block.type === "spacer" && (
+                            <div className="space-y-2">
+                              <Label>Height</Label>
+                              <RadioGroup
+                                value={block.metadata?.height || "medium"}
+                                onValueChange={(value) =>
+                                  handleUpdateBlock(block.id, {
+                                    metadata: { ...block.metadata, height: value },
+                                  })
+                                }
+                                className="flex flex-wrap gap-4"
+                              >
+                                {[
+                                  { value: "small", label: "Small (16px)" },
+                                  { value: "medium", label: "Medium (32px)" },
+                                  { value: "large", label: "Large (48px)" },
+                                  { value: "xl", label: "XL (64px)" },
+                                ].map((option) => (
+                                  <div key={option.value} className="flex items-center space-x-2">
+                                    <RadioGroupItem value={option.value} id={`height-${block.id}-${option.value}`} />
+                                    <Label htmlFor={`height-${block.id}-${option.value}`} className="text-sm font-normal cursor-pointer">
+                                      {option.label}
+                                    </Label>
+                                  </div>
+                                ))}
+                              </RadioGroup>
+                            </div>
+                          )}
+
+                          {/* Divider block */}
+                          {block.type === "divider" && (
+                            <div className="space-y-2">
+                              <Label>Style</Label>
+                              <RadioGroup
+                                value={block.metadata?.style || "solid"}
+                                onValueChange={(value) =>
+                                  handleUpdateBlock(block.id, {
+                                    metadata: { ...block.metadata, style: value },
+                                  })
+                                }
+                                className="flex flex-wrap gap-4"
+                              >
+                                {[
+                                  { value: "solid", label: "Solid" },
+                                  { value: "dashed", label: "Dashed" },
+                                  { value: "dotted", label: "Dotted" },
+                                ].map((option) => (
+                                  <div key={option.value} className="flex items-center space-x-2">
+                                    <RadioGroupItem value={option.value} id={`style-${block.id}-${option.value}`} />
+                                    <Label htmlFor={`style-${block.id}-${option.value}`} className="text-sm font-normal cursor-pointer">
+                                      {option.label}
+                                    </Label>
+                                  </div>
+                                ))}
+                              </RadioGroup>
                             </div>
                           )}
                         </div>

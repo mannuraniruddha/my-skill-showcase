@@ -34,12 +34,13 @@ const TabbedCodeBlock = ({
   const [copied, setCopied] = useState(false);
   const [activeTab, setActiveTab] = useState<string>("beginner");
 
-  // Determine which levels have content
-  const availableLevels = levels
-    ? (Object.entries(levels) as [keyof CodeLevels, string | undefined][])
-        .filter(([, value]) => value && value.trim().length > 0)
-        .map(([key]) => key)
-    : [];
+  // Define explicit order for tabs
+  const LEVEL_ORDER: (keyof CodeLevels)[] = ["beginner", "intermediate", "expert"];
+
+  // Determine which levels have content, maintaining correct order
+  const availableLevels = LEVEL_ORDER.filter(
+    (level) => levels?.[level] && levels[level]!.trim().length > 0
+  );
 
   // If no levels or only legacy content, render simple code block
   const hasMultipleLevels = availableLevels.length > 1;
