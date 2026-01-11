@@ -1,7 +1,14 @@
-import { Github, Linkedin, Mail } from "lucide-react";
+import { Github, Linkedin, Mail, Eye } from "lucide-react";
+import { useVisitorCount } from "@/hooks/useVisitorCount";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const { count, isLoading } = useVisitorCount();
+
+  const formatCount = (num: number) => {
+    return num.toLocaleString();
+  };
 
   return (
     <footer className="py-12 border-t border-border">
@@ -11,6 +18,17 @@ const Footer = () => {
             <span className="font-mono text-sm text-muted-foreground">
               © {currentYear} <span className="text-primary">Aniruddha Mannur</span>
             </span>
+          </div>
+
+          <div className="flex items-center gap-2 text-muted-foreground">
+            <Eye className="w-4 h-4" />
+            {isLoading ? (
+              <Skeleton className="h-4 w-16" />
+            ) : (
+              <span className="font-mono text-sm">
+                {formatCount(count ?? 0)} visitors
+              </span>
+            )}
           </div>
 
           <div className="flex items-center gap-4">

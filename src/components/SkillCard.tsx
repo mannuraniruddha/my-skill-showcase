@@ -1,23 +1,31 @@
 import { motion } from "framer-motion";
 import { LucideIcon } from "lucide-react";
 
+interface Project {
+  id: string;
+  title: string;
+  slug: string;
+}
+
 interface SkillCardProps {
   title: string;
   description: string;
   icon: LucideIcon;
   projectCount: number;
-  projects?: string[];
+  projects?: Project[];
   delay?: number;
+  onClick?: () => void;
 }
 
-const SkillCard = ({ title, description, icon: Icon, projectCount, projects = [], delay = 0 }: SkillCardProps) => {
+const SkillCard = ({ title, description, icon: Icon, projectCount, projects = [], delay = 0, onClick }: SkillCardProps) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay }}
       viewport={{ once: true }}
-      className="group relative p-6 rounded-xl bg-card border border-border hover:border-primary/50 transition-all duration-500 shadow-card hover:glow-primary"
+      onClick={onClick}
+      className="group relative p-6 rounded-xl bg-card border border-border hover:border-primary/50 transition-all duration-500 shadow-card hover:glow-primary cursor-pointer"
     >
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
       
@@ -38,11 +46,16 @@ const SkillCard = ({ title, description, icon: Icon, projectCount, projects = []
           <div className="mb-4">
             <p className="text-xs font-mono text-muted-foreground mb-2">Projects:</p>
             <ul className="space-y-1">
-              {projects.map((project) => (
-                <li key={project} className="text-sm text-foreground">
-                  • {project}
+              {projects.slice(0, 3).map((project) => (
+                <li key={project.id} className="text-sm text-foreground">
+                  • {project.title}
                 </li>
               ))}
+              {projects.length > 3 && (
+                <li className="text-sm text-muted-foreground">
+                  +{projects.length - 3} more
+                </li>
+              )}
             </ul>
           </div>
         )}
