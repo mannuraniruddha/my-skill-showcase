@@ -133,6 +133,27 @@ export type Database = {
         }
         Relationships: []
       }
+      site_stats: {
+        Row: {
+          id: string
+          stat_key: string
+          stat_value: number
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          stat_key: string
+          stat_value?: number
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          stat_key?: string
+          stat_value?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       skills: {
         Row: {
           created_at: string
@@ -193,6 +214,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      increment_visitor_count: { Args: never; Returns: number }
     }
     Enums: {
       app_role: "admin" | "user"
