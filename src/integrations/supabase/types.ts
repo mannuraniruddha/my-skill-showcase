@@ -202,6 +202,24 @@ export type Database = {
         }
         Relationships: []
       }
+      visitor_sessions: {
+        Row: {
+          created_at: string
+          id: string
+          visitor_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          visitor_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          visitor_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -214,7 +232,14 @@ export type Database = {
         }
         Returns: boolean
       }
-      increment_visitor_count: { Args: never; Returns: number }
+      track_visitor: {
+        Args: { p_visitor_id: string }
+        Returns: {
+          is_new_visitor: boolean
+          total_visits: number
+          unique_visitors: number
+        }[]
+      }
     }
     Enums: {
       app_role: "admin" | "user"
