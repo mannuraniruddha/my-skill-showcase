@@ -53,9 +53,11 @@ const ContentRenderer = ({ blocks, searchQuery }: ContentRendererProps) => {
             );
           case "text":
             return (
-              <p key={block.id} className="text-foreground leading-relaxed">
-                {block.content}
-              </p>
+              <MarkdownBlock
+                key={block.id}
+                content={block.content}
+                searchQuery={searchQuery}
+              />
             );
           case "spacer":
             return (

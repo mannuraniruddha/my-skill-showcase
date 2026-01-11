@@ -1,10 +1,16 @@
-import { Github, Linkedin, Mail, Eye } from "lucide-react";
+import { Github, Linkedin, Mail, Eye, Users } from "lucide-react";
 import { useVisitorCount } from "@/hooks/useVisitorCount";
 import { Skeleton } from "@/components/ui/skeleton";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-  const { count, isLoading } = useVisitorCount();
+  const { stats, isLoading } = useVisitorCount();
 
   const formatCount = (num: number) => {
     return num.toLocaleString();
@@ -20,16 +26,47 @@ const Footer = () => {
             </span>
           </div>
 
-          <div className="flex items-center gap-2 text-muted-foreground">
-            <Eye className="w-4 h-4" />
-            {isLoading ? (
-              <Skeleton className="h-4 w-16" />
-            ) : (
-              <span className="font-mono text-sm">
-                {formatCount(count ?? 0)} visitors
-              </span>
-            )}
-          </div>
+          <TooltipProvider>
+            <div className="flex items-center gap-4 text-muted-foreground">
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div className="flex items-center gap-1.5 cursor-help">
+                    <Eye className="w-4 h-4" />
+                    {isLoading ? (
+                      <Skeleton className="h-4 w-12" />
+                    ) : (
+                      <span className="font-mono text-sm">
+                        {formatCount(stats?.totalVisits ?? 0)}
+                      </span>
+                    )}
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Total page visits</p>
+                </TooltipContent>
+              </Tooltip>
+
+              <span className="text-border">|</span>
+
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div className="flex items-center gap-1.5 cursor-help">
+                    <Users className="w-4 h-4" />
+                    {isLoading ? (
+                      <Skeleton className="h-4 w-12" />
+                    ) : (
+                      <span className="font-mono text-sm">
+                        {formatCount(stats?.uniqueVisitors ?? 0)}
+                      </span>
+                    )}
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Unique visitors</p>
+                </TooltipContent>
+              </Tooltip>
+            </div>
+          </TooltipProvider>
 
           <div className="flex items-center gap-4">
             <a

@@ -162,3 +162,19 @@ mark {
   padding: 0 2px;
   border-radius: 2px;
 }
+
+/* Fix markdown line breaks */
+.prose p:empty {
+  display: none;
+}
+
+.prose br {
+  display: block;
+  content: "";
+  margin-top: 0.5em;
+}
+
+/* Preserve whitespace in prose */
+.prose p {
+  white-space: pre-wrap;
+}
