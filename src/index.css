@@ -163,7 +163,7 @@ mark {
   border-radius: 2px;
 }
 
-/* Fix markdown line breaks */
+/* Fix markdown line breaks and spacing */
 .prose p:empty {
   display: none;
 }
@@ -174,7 +174,31 @@ mark {
   margin-top: 0.5em;
 }
 
-/* Preserve whitespace in prose */
-.prose p {
-  white-space: pre-wrap;
+/* Preserve intentional line breaks but normalize spaces */
+.prose p,
+.prose li,
+.prose blockquote {
+  white-space: pre-line;
+  word-break: break-word;
+}
+
+/* Normalize whitespace in inline elements */
+.prose p > *,
+.prose li > *,
+.prose blockquote > * {
+  white-space: normal;
+}
+
+/* Fix extra spacing from HTML content */
+.prose p + p {
+  margin-top: 1em;
+}
+
+/* Remove extra margin from first/last children */
+.prose > :first-child {
+  margin-top: 0;
+}
+
+.prose > :last-child {
+  margin-bottom: 0;
 }
