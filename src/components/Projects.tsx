@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useProjects } from "@/hooks/useProjects";
 import ProjectCard from "./ProjectCard";
+import ProductBacklogDownload from "./ProductBacklogDownload";
 
 const Projects = () => {
   const { data: projects, isLoading } = useProjects();
@@ -10,15 +11,18 @@ const Projects = () => {
   return (
     <section id="projects" className="py-24">
       <div className="container px-6">
-        <div className="max-w-2xl mb-16">
-          <p className="font-mono text-primary text-sm mb-3">// portfolio</p>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Featured Projects
-          </h2>
-          <p className="text-muted-foreground leading-relaxed">
-            A collection of projects showcasing my skills and experience across
-            different domains.
-          </p>
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-16">
+          <div className="max-w-2xl">
+            <p className="font-mono text-primary text-sm mb-3">// portfolio</p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Featured Projects
+            </h2>
+            <p className="text-muted-foreground leading-relaxed">
+              A collection of projects showcasing my skills and experience across
+              different domains.
+            </p>
+          </div>
+          <ProductBacklogDownload />
         </div>
 
         {isLoading ? (
