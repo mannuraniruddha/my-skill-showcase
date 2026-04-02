@@ -35,6 +35,7 @@ const ProjectDetail = () => {
     currentPage,
     PAGE_SIZE
   );
+  const { pythonLevel } = useUserPreferences();
 
   const handlePageChange = (page: number) => {
     setSearchParams({ page: page.toString() });
