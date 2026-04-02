@@ -236,7 +236,7 @@ const ProjectDetail = () => {
                   </div>
                 )}
 
-                <ContentRenderer blocks={paginatedData.blocks as any} />
+                <ContentRenderer blocks={paginatedData.blocks as any} defaultLevel={pythonLevel} />
 
                 {/* Pagination */}
                 {paginatedData.totalPages > 1 && (
