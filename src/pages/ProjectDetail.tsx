@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowLeft, Github, ExternalLink } from "lucide-react";
 import { useProject } from "@/hooks/useProjects";
 import { usePaginatedContent } from "@/hooks/usePaginatedContent";
+import { useUserPreferences } from "@/hooks/useUserPreferences";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
