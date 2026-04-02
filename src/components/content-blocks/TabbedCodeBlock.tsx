@@ -17,6 +17,7 @@ interface TabbedCodeBlockProps {
   language: string;
   filename?: string;
   levels?: CodeLevels;
+  defaultLevel?: string;
 }
 
 const LEVEL_LABELS = {
