@@ -10,9 +10,6 @@ const DeploymentBanner = () => {
     }
   });
 
-  // Only show in production
-  if (!import.meta.env.PROD || isDismissed) return null;
-
   const basePath = import.meta.env.BASE_URL;
   const currentPath = typeof window !== "undefined" ? window.location.pathname : "";
   const isBasePathValid = currentPath.startsWith(basePath) || basePath === "/";
@@ -22,6 +19,9 @@ const DeploymentBanner = () => {
     if (typeof window === "undefined") return "";
     return new URL(basePath, window.location.origin).toString();
   }, [basePath]);
+
+  // Only show in production
+  if (!import.meta.env.PROD || isDismissed) return null;
 
   const handleDismiss = () => {
     setIsDismissed(true);
