@@ -9,6 +9,7 @@ import DividerBlock from "./DividerBlock";
 interface ContentRendererProps {
   blocks: ContentBlock[];
   searchQuery?: string;
+  defaultLevel?: string;
 }
 
 const ContentRenderer = ({ blocks, searchQuery }: ContentRendererProps) => {
