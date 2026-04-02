@@ -132,7 +132,7 @@ const TabbedCodeBlock = ({
               <TabsTrigger
                 key={level}
                 value={level}
-                className="data-[state=active]:bg-card data-[state=active]:shadow-sm"
+                className="data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border-b-2 data-[state=active]:border-primary"
               >
                 <span className={LEVEL_LABELS[level].color.split(" ")[1]}>
                   {LEVEL_LABELS[level].label}
