@@ -25,6 +25,7 @@ const ContentRenderer = ({ blocks, searchQuery, defaultLevel }: ContentRendererP
                 language={block.metadata?.language || "text"}
                 filename={block.metadata?.filename}
                 levels={block.metadata?.levels}
+                defaultLevel={defaultLevel}
               />
             );
           case "markdown":
