@@ -19,6 +19,7 @@ import {
 import ContentRenderer from "@/components/content-blocks/ContentRenderer";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import UserLevelSelector from "@/components/UserLevelSelector";
 
 const PAGE_SIZE = 10;
 
