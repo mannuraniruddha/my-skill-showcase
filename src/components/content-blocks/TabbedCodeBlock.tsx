@@ -31,9 +31,10 @@ const TabbedCodeBlock = ({
   language,
   filename,
   levels,
+  defaultLevel,
 }: TabbedCodeBlockProps) => {
   const [copied, setCopied] = useState(false);
-  const [activeTab, setActiveTab] = useState<string>("beginner");
+  const [activeTab, setActiveTab] = useState<string>(defaultLevel || "beginner");
 
   // Define explicit order for tabs
   const LEVEL_ORDER: (keyof CodeLevels)[] = ["beginner", "intermediate", "expert"];
