@@ -214,6 +214,7 @@ const ProjectDetail = () => {
 
         {/* Content */}
         <section className="container px-6 py-12 max-w-4xl">
+          <UserLevelSelector />
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
