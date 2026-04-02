@@ -12,7 +12,7 @@ interface ContentRendererProps {
   defaultLevel?: string;
 }
 
-const ContentRenderer = ({ blocks, searchQuery }: ContentRendererProps) => {
+const ContentRenderer = ({ blocks, searchQuery, defaultLevel }: ContentRendererProps) => {
   return (
     <div className="space-y-6">
       {blocks.map((block) => {
