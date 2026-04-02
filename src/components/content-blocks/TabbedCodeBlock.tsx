@@ -17,6 +17,7 @@ interface TabbedCodeBlockProps {
   language: string;
   filename?: string;
   levels?: CodeLevels;
+  defaultLevel?: string;
 }
 
 const LEVEL_LABELS = {
@@ -30,9 +31,10 @@ const TabbedCodeBlock = ({
   language,
   filename,
   levels,
+  defaultLevel,
 }: TabbedCodeBlockProps) => {
   const [copied, setCopied] = useState(false);
-  const [activeTab, setActiveTab] = useState<string>("beginner");
+  const [activeTab, setActiveTab] = useState<string>(defaultLevel || "beginner");
 
   // Define explicit order for tabs
   const LEVEL_ORDER: (keyof CodeLevels)[] = ["beginner", "intermediate", "expert"];
@@ -130,7 +132,7 @@ const TabbedCodeBlock = ({
               <TabsTrigger
                 key={level}
                 value={level}
-                className="data-[state=active]:bg-card data-[state=active]:shadow-sm"
+                className="data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border-b-2 data-[state=active]:border-primary"
               >
                 <span className={LEVEL_LABELS[level].color.split(" ")[1]}>
                   {LEVEL_LABELS[level].label}

@@ -9,9 +9,10 @@ import DividerBlock from "./DividerBlock";
 interface ContentRendererProps {
   blocks: ContentBlock[];
   searchQuery?: string;
+  defaultLevel?: string;
 }
 
-const ContentRenderer = ({ blocks, searchQuery }: ContentRendererProps) => {
+const ContentRenderer = ({ blocks, searchQuery, defaultLevel }: ContentRendererProps) => {
   return (
     <div className="space-y-6">
       {blocks.map((block) => {
@@ -24,6 +25,7 @@ const ContentRenderer = ({ blocks, searchQuery }: ContentRendererProps) => {
                 language={block.metadata?.language || "text"}
                 filename={block.metadata?.filename}
                 levels={block.metadata?.levels}
+                defaultLevel={defaultLevel}
               />
             );
           case "markdown":

@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowLeft, Github, ExternalLink } from "lucide-react";
 import { useProject } from "@/hooks/useProjects";
 import { usePaginatedContent } from "@/hooks/usePaginatedContent";
+import { useUserPreferences } from "@/hooks/useUserPreferences";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -18,6 +19,7 @@ import {
 import ContentRenderer from "@/components/content-blocks/ContentRenderer";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import UserLevelSelector from "@/components/UserLevelSelector";
 
 const PAGE_SIZE = 10;
 
@@ -33,6 +35,7 @@ const ProjectDetail = () => {
     currentPage,
     PAGE_SIZE
   );
+  const { pythonLevel } = useUserPreferences();
 
   const handlePageChange = (page: number) => {
     setSearchParams({ page: page.toString() });
@@ -211,6 +214,7 @@ const ProjectDetail = () => {
 
         {/* Content */}
         <section className="container px-6 py-12 max-w-4xl">
+          <UserLevelSelector />
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -233,7 +237,7 @@ const ProjectDetail = () => {
                   </div>
                 )}
 
-                <ContentRenderer blocks={paginatedData.blocks as any} />
+                <ContentRenderer blocks={paginatedData.blocks as any} defaultLevel={pythonLevel} />
 
                 {/* Pagination */}
                 {paginatedData.totalPages > 1 && (
