@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Settings, LogIn, LogOut, Search } from "lucide-react";
+import { Menu, X, Settings, LogIn, LogOut, Search, UserCog } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import SearchCommand from "./SearchCommand";
 
@@ -111,6 +111,17 @@ const Navbar = () => {
                 </Link>
               </li>
             )}
+            {user && (
+              <li>
+                <Link
+                  to="/settings"
+                  className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <UserCog className="w-4 h-4" />
+                  Settings
+                </Link>
+              </li>
+            )}
             <li>
               {user ? (
                 <button
@@ -182,7 +193,19 @@ const Navbar = () => {
                         Admin
                       </Link>
                     </li>
-                  )}
+                    )}
+                    {user && (
+                      <li>
+                        <Link
+                          to="/settings"
+                          onClick={() => setIsMobileMenuOpen(false)}
+                          className="flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors"
+                        >
+                          <UserCog className="w-4 h-4" />
+                          Settings
+                        </Link>
+                      </li>
+                    )}
                   <li>
                     {user ? (
                       <button
