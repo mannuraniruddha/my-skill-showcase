@@ -193,7 +193,19 @@ const Navbar = () => {
                         Admin
                       </Link>
                     </li>
-                  )}
+                    )}
+                    {user && (
+                      <li>
+                        <Link
+                          to="/settings"
+                          onClick={() => setIsMobileMenuOpen(false)}
+                          className="flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors"
+                        >
+                          <UserCog className="w-4 h-4" />
+                          Settings
+                        </Link>
+                      </li>
+                    )}
                   <li>
                     {user ? (
                       <button
