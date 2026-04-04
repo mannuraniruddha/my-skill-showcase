@@ -111,6 +111,17 @@ const Navbar = () => {
                 </Link>
               </li>
             )}
+            {user && (
+              <li>
+                <Link
+                  to="/settings"
+                  className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <UserCog className="w-4 h-4" />
+                  Settings
+                </Link>
+              </li>
+            )}
             <li>
               {user ? (
                 <button
