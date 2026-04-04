@@ -12,6 +12,7 @@ import Auth from "./pages/Auth";
 import Admin from "./pages/Admin";
 import ContentEditor from "./pages/ContentEditor";
 import ProjectDetail from "./pages/ProjectDetail";
+import Settings from "./pages/Settings";
 
 const App = () => (
   <>
@@ -28,6 +29,7 @@ const App = () => (
             <Route path="/admin" element={<Admin />} />
             <Route path="/admin/projects/:slug/content" element={<ContentEditor />} />
             <Route path="/projects/:slug" element={<ProjectDetail />} />
+            <Route path="/settings" element={<Settings />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </HashRouter>

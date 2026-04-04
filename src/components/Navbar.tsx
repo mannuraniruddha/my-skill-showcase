@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Settings, LogIn, LogOut, Search } from "lucide-react";
+import { Menu, X, Settings, LogIn, LogOut, Search, UserCog } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import SearchCommand from "./SearchCommand";
 
