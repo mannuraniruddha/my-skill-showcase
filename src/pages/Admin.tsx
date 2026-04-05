@@ -139,6 +139,10 @@ const Admin = () => {
               <FolderOpen className="w-4 h-4" />
               Projects
             </TabsTrigger>
+            <TabsTrigger value="users" className="gap-2">
+              <Users className="w-4 h-4" />
+              Users
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="skills">
@@ -147,6 +151,10 @@ const Admin = () => {
 
           <TabsContent value="projects">
             <ProjectsManager />
+          </TabsContent>
+
+          <TabsContent value="users">
+            <UsersManager />
           </TabsContent>
         </Tabs>
       </main>
