@@ -52,6 +52,7 @@ const Settings = () => {
         .maybeSingle();
       if (data?.theme_preference) {
         setThemePreference(data.theme_preference);
+        applyTheme(data.theme_preference);
       }
     };
     loadTheme();
