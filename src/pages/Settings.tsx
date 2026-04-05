@@ -13,6 +13,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { applyTheme } from "@/hooks/useTheme";
 import { User, GraduationCap, Lock, Palette } from "lucide-react";
 import { useState } from "react";
 
@@ -52,6 +53,7 @@ const Settings = () => {
         .maybeSingle();
       if (data?.theme_preference) {
         setThemePreference(data.theme_preference);
+        applyTheme(data.theme_preference);
       }
     };
     loadTheme();
@@ -131,17 +133,6 @@ const Settings = () => {
     }
   };
 
-  const applyTheme = (theme: string) => {
-    const root = document.documentElement;
-    if (theme === "system") {
-      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      root.classList.toggle("dark", prefersDark);
-      root.classList.toggle("light", !prefersDark);
-    } else {
-      root.classList.toggle("dark", theme === "dark");
-      root.classList.toggle("light", theme === "light");
-    }
-  };
 
   if (loading || !user) {
     return null;
