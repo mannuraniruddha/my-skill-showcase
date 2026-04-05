@@ -13,6 +13,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { applyTheme } from "@/hooks/useTheme";
 import { User, GraduationCap, Lock, Palette } from "lucide-react";
 import { useState } from "react";
 
