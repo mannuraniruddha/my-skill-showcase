@@ -5,9 +5,10 @@ import { useAuth } from "@/hooks/useAuth";
 import { useSkills } from "@/hooks/useSkills";
 import { useProjects } from "@/hooks/useProjects";
 import { Button } from "@/components/ui/button";
-import { LogOut, Home, Layers, FolderOpen, ShieldAlert } from "lucide-react";
+import { LogOut, Home, Layers, FolderOpen, ShieldAlert, Users } from "lucide-react";
 import SkillsManager from "@/components/admin/SkillsManager";
 import ProjectsManager from "@/components/admin/ProjectsManager";
+import UsersManager from "@/components/admin/UsersManager";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Admin = () => {
