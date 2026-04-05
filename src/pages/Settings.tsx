@@ -14,8 +14,19 @@ import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { applyTheme } from "@/hooks/useTheme";
-import { User, GraduationCap, Lock, Palette } from "lucide-react";
+import { User, GraduationCap, Lock, Palette, Trash2 } from "lucide-react";
 import { useState } from "react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 const Settings = () => {
   const navigate = useNavigate();
@@ -29,6 +40,8 @@ const Settings = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [themePreference, setThemePreference] = useState("system");
   const [saving, setSaving] = useState(false);
+  const [deactivating, setDeactivating] = useState(false);
+  const { signOut } = useAuth();
 
   useEffect(() => {
     if (!loading && !user) {
@@ -133,6 +146,23 @@ const Settings = () => {
     }
   };
 
+
+  const handleDeactivateAccount = async () => {
+    setDeactivating(true);
+    try {
+      const { error } = await supabase
+        .from("profiles")
+        .update({ is_deactivated: true, deactivated_at: new Date().toISOString() })
+        .eq("user_id", user!.id);
+      if (error) throw error;
+      toast.success("Account deactivated. You will be signed out.");
+      setTimeout(() => signOut(), 1500);
+    } catch {
+      toast.error("Failed to deactivate account");
+    } finally {
+      setDeactivating(false);
+    }
+  };
 
   if (loading || !user) {
     return null;
@@ -276,6 +306,44 @@ const Settings = () => {
               <Button onClick={handleChangePassword} disabled={saving || !newPassword} size="sm">
                 {saving ? "Updating..." : "Update Password"}
               </Button>
+            </CardContent>
+          </Card>
+          {/* Delete / Deactivate Account */}
+          <Card className="border-destructive/30 bg-card">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-destructive">
+                <Trash2 className="w-5 h-5" />
+                Deactivate Account
+              </CardTitle>
+              <CardDescription>
+                Deactivating your account will disable access. Your data will be retained and can be restored by an administrator.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button variant="destructive" size="sm" disabled={deactivating}>
+                    {deactivating ? "Deactivating..." : "Deactivate Account"}
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      This will deactivate your account and sign you out. Your data will be preserved, but you won't be able to log in until an administrator reactivates your account.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction
+                      onClick={handleDeactivateAccount}
+                      className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                    >
+                      Yes, deactivate my account
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
             </CardContent>
           </Card>
         </div>
