@@ -1,0 +1,248 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@layer base {
+  :root {
+    --background: 220 20% 6%;
+    --foreground: 210 20% 95%;
+
+    --card: 220 18% 10%;
+    --card-foreground: 210 20% 95%;
+
+    --popover: 220 18% 10%;
+    --popover-foreground: 210 20% 95%;
+
+    --primary: 175 70% 45%;
+    --primary-foreground: 220 20% 6%;
+
+    --secondary: 220 15% 15%;
+    --secondary-foreground: 210 20% 90%;
+
+    --muted: 220 15% 18%;
+    --muted-foreground: 215 15% 55%;
+
+    --accent: 175 60% 40%;
+    --accent-foreground: 220 20% 6%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 220 15% 18%;
+    --input: 220 15% 18%;
+    --ring: 175 70% 45%;
+
+    --radius: 0.75rem;
+
+    /* Custom tokens */
+    --gradient-primary: linear-gradient(135deg, hsl(175 70% 45%), hsl(190 80% 50%));
+    --gradient-subtle: linear-gradient(180deg, hsl(220 18% 12%), hsl(220 20% 6%));
+    --glow-primary: 0 0 40px hsl(175 70% 45% / 0.3);
+    --shadow-card: 0 4px 24px hsl(0 0% 0% / 0.4);
+    
+    --font-mono: 'JetBrains Mono', monospace;
+    --font-sans: 'Inter', system-ui, sans-serif;
+
+    --sidebar-background: 220 18% 10%;
+    --sidebar-foreground: 210 20% 95%;
+    --sidebar-primary: 175 70% 45%;
+    --sidebar-primary-foreground: 220 20% 6%;
+    --sidebar-accent: 220 15% 15%;
+    --sidebar-accent-foreground: 210 20% 90%;
+    --sidebar-border: 220 15% 18%;
+    --sidebar-ring: 175 70% 45%;
+  }
+
+  .light {
+    --background: 0 0% 98%;
+    --foreground: 220 20% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 20% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 20% 10%;
+
+    --primary: 175 70% 38%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 15% 92%;
+    --secondary-foreground: 220 20% 15%;
+
+    --muted: 220 15% 94%;
+    --muted-foreground: 215 15% 40%;
+
+    --accent: 175 60% 35%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 15% 88%;
+    --input: 220 15% 88%;
+    --ring: 175 70% 38%;
+
+    --gradient-primary: linear-gradient(135deg, hsl(175 70% 38%), hsl(190 80% 42%));
+    --gradient-subtle: linear-gradient(180deg, hsl(220 15% 96%), hsl(0 0% 98%));
+    --glow-primary: 0 0 40px hsl(175 70% 38% / 0.15);
+    --shadow-card: 0 4px 24px hsl(0 0% 0% / 0.08);
+
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 220 20% 10%;
+    --sidebar-primary: 175 70% 38%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 15% 94%;
+    --sidebar-accent-foreground: 220 20% 15%;
+    --sidebar-border: 220 15% 88%;
+    --sidebar-ring: 175 70% 38%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: var(--font-sans);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold tracking-tight;
+  }
+
+  code, .font-mono {
+    font-family: var(--font-mono);
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-primary);
+  }
+
+  .bg-gradient-primary {
+    background-image: var(--gradient-primary);
+  }
+
+  .bg-gradient-subtle {
+    background-image: var(--gradient-subtle);
+  }
+
+  .glow-primary {
+    box-shadow: var(--glow-primary);
+  }
+
+  .shadow-card {
+    box-shadow: var(--shadow-card);
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-pulse-slow {
+    animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* TipTap Editor Styles */
+.tiptap-editor {
+  min-height: 150px;
+  outline: none;
+}
+
+.tiptap-editor p.is-empty::before {
+  content: attr(data-placeholder);
+  color: hsl(var(--muted-foreground));
+  pointer-events: none;
+  float: left;
+  height: 0;
+}
+
+.ProseMirror {
+  outline: none;
+}
+
+.ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: hsl(var(--muted-foreground));
+  pointer-events: none;
+  height: 0;
+}
+
+/* Prose styling for rich text */
+.prose {
+  --tw-prose-body: hsl(var(--muted-foreground));
+  --tw-prose-headings: hsl(var(--foreground));
+  --tw-prose-links: hsl(var(--primary));
+  --tw-prose-bold: hsl(var(--foreground));
+  --tw-prose-counters: hsl(var(--muted-foreground));
+  --tw-prose-bullets: hsl(var(--muted-foreground));
+  --tw-prose-quotes: hsl(var(--muted-foreground));
+  --tw-prose-quote-borders: hsl(var(--primary));
+  --tw-prose-code: hsl(var(--foreground));
+  --tw-prose-pre-bg: hsl(var(--secondary));
+}
+
+/* Search highlight */
+mark {
+  background-color: hsl(var(--primary) / 0.3);
+  color: hsl(var(--foreground));
+  padding: 0 2px;
+  border-radius: 2px;
+}
+
+/* Fix markdown line breaks and spacing */
+.prose p:empty {
+  display: none;
+}
+
+.prose br {
+  display: block;
+  content: "";
+  margin-top: 0.5em;
+}
+
+/* Preserve intentional line breaks but normalize spaces */
+.prose p,
+.prose li,
+.prose blockquote {
+  white-space: pre-line;
+  word-break: break-word;
+}
+
+/* Normalize whitespace in inline elements */
+.prose p > *,
+.prose li > *,
+.prose blockquote > * {
+  white-space: normal;
+}
+
+/* Fix extra spacing from HTML content */
+.prose p + p {
+  margin-top: 1em;
+}
+
+/* Remove extra margin from first/last children */
+.prose > :first-child {
+  margin-top: 0;
+}
+
+.prose > :last-child {
+  margin-bottom: 0;
+}
